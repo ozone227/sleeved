@@ -33,8 +33,13 @@ has its first public release.
 2. Bump `version` in `package.json`.
 3. Move the `[Unreleased]` entries in `CHANGELOG.md` under a new
    `## [X.Y.Z] - YYYY-MM-DD` heading.
-4. Commit: `chore(release): vX.Y.Z`.
-5. Tag and push: `git tag -a vX.Y.Z -m "vX.Y.Z"` then `git push --tags`.
+4. Update the version suffix on the title line of `README.md`
+   (`# The TCG Nexus vX.Y.Z`) to match.
+5. Commit: `chore(release): vX.Y.Z`.
+6. Tag and push: `git tag -a vX.Y.Z -m "vX.Y.Z"` then `git push --tags`.
+
+Since `main` is protected, steps 2-6 happen on a `chore/release-vX.Y.Z` branch,
+via PR, like everything else.
 
 ## Commit Messages
 
