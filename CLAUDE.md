@@ -9,6 +9,9 @@ A multi-game trading card collection manager and gallery. Built to catalog physi
 ```
 tcg-nexus/
 ├── CLAUDE.md                   ← you are here
+├── CONTRIBUTING.md             # Branching model and semver policy
+├── CHANGELOG.md                # Keep a Changelog, per package.json version
+├── package.json                # Root project version (single source of truth)
 ├── scripts/
 │   └── setup-bucket.sh         # One-time S3 bucket creation and configuration
 ├── schema/
@@ -19,6 +22,23 @@ tcg-nexus/
 │   └── architecture.md         # Design decisions and storage layout
 └── app/                        # React + Vite gallery app (in progress)
 ```
+
+---
+
+## Versioning & Branching
+
+Full policy: [`CONTRIBUTING.md`](CONTRIBUTING.md). Summary for anything working in
+this repo (including Claude Code sessions):
+
+- **Branching (GitHub Flow)** — don't commit straight to `main` except trivial
+  one-line doc fixes. Branch as `feature/`, `fix/`, or `chore/` for anything else
+  (app work, schema/game-config changes, scripts), PR into `main`, then delete
+  the branch.
+- **Semantic versioning** — `package.json` `version` is the single version for
+  the whole project. MAJOR = breaking schema/S3-layout/game-config change,
+  MINOR = new game or feature (additive), PATCH = fixes/docs/refactors.
+- **Releasing** — bump `version`, move `CHANGELOG.md`'s `[Unreleased]` section
+  into a dated `[X.Y.Z]` entry, commit as `chore(release): vX.Y.Z`, tag `vX.Y.Z`.
 
 ---
 

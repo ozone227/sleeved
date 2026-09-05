@@ -1,0 +1,10 @@
+{
+  "name": "tcg-nexus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A multi-game trading card collection manager and gallery.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ozone227/tcg-nexus"
+  }
+}
