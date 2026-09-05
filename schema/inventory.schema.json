@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TCG Nexus Inventory",
+  "type": "object",
+  "required": ["game", "displayName", "lastUpdated", "structure", "cards"],
+  "properties": {
+    "game": { "type": "string", "description": "Machine-readable game ID" },
+    "displayName": { "type": "string" },
+    "lastUpdated": { "type": "string", "format": "date" },
+    "structure": {
+      "type": "object",
+      "properties": {
+        "types": { "type": "array", "items": { "type": "string" } },
+        "colors": { "type": "array", "items": { "type": "string" } },
+        "coloredTypes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "set", "rarity", "copies", "image"],
+        "properties": {
+          "id":       { "type": "string", "description": "URL-safe slug, e.g. rogue-amerascu" },
+          "name":     { "type": "string" },
+          "type":     { "type": "string", "enum": ["Legend", "Unit", "Program", "Gear"] },
+          "color":    { "type": ["string", "null"], "description": "null for Legends" },
+          "set":      { "type": "string" },
+          "rarity":   { "type": "string" },
+          "cost":     { "type": ["integer", "null"] },
+          "power":    { "type": ["integer", "null"] },
+          "ram": {
+            "type": ["object", "null"],
+            "description": "Legends only — RAM values by color",
+            "properties": {
+              "red":    { "type": "integer" },
+              "green":  { "type": "integer" },
+              "blue":   { "type": "integer" },
+              "yellow": { "type": "integer" }
+            }
+          },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "sellTag":  { "type": "boolean" },
+          "copies":   { "type": "integer", "minimum": 1, "maximum": 3 },
+          "image":    { "type": "string", "description": "Relative path within game folder in S3" },
+          "notes":    { "type": "string" }
+        }
+      }
+    }
+  }
+}

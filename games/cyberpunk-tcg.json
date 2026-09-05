@@ -1,0 +1,22 @@
+{
+  "id": "cyberpunk-tcg",
+  "displayName": "Cyberpunk TCG",
+  "s3Prefix": "cyberpunk-tcg",
+  "sets": [
+    { "id": "welcome-to-night-city", "displayName": "Welcome to Night City", "releaseDate": "2026-10-01" }
+  ],
+  "structure": {
+    "types": ["Legend", "Unit", "Program", "Gear"],
+    "colors": ["Red", "Green", "Blue", "Yellow"],
+    "coloredTypes": ["Unit", "Program", "Gear"],
+    "s3Paths": {
+      "Legend":  "legends",
+      "Unit":    "units/{color}",
+      "Program": "programs/{color}",
+      "Gear":    "gear/{color}"
+    }
+  },
+  "filters": ["type", "color", "set", "rarity", "keyword", "sellTag"],
+  "rarities": ["Common", "Uncommon", "Rare", "Legendary"],
+  "keywords": ["Adrenaline", "Blocker", "Quick", "Go Solo", "Lag"]
+}
