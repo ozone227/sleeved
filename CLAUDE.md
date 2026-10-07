@@ -1,4 +1,4 @@
-# The TCG Nexus — Claude Code Context
+# Sleeved — Claude Code Context
 
 A multi-game trading card collection manager and gallery. Built to catalog physical card collections via phone photography, store images and inventory data in AWS S3, and serve them through a public web gallery.
 
@@ -7,7 +7,7 @@ A multi-game trading card collection manager and gallery. Built to catalog physi
 ## Project Structure
 
 ```
-tcg-nexus/
+sleeved/
 ├── CLAUDE.md                   ← you are here
 ├── CONTRIBUTING.md             # Branching model and semver policy
 ├── CHANGELOG.md                # Keep a Changelog, per package.json version
@@ -44,16 +44,16 @@ this repo (including Claude Code sessions):
 
 ## Storage: AWS S3
 
-**Bucket**: `tcg-nexus-collection`
+**Bucket**: `sleeved-collection`
 **Region**: `us-east-1`
 **Access**: Public read
 **Versioning**: Enabled
-**Base URL**: `https://tcg-nexus-collection.s3.amazonaws.com`
+**Base URL**: `https://sleeved-collection.s3.amazonaws.com`
 
 ### Bucket Layout
 
 ```
-s3://tcg-nexus-collection/
+s3://sleeved-collection/
 ├── games.json                          # Top-level manifest of all supported games
 └── {game-id}/
     ├── inventory.json                  # Card catalog for this game (see schema below)
@@ -73,16 +73,16 @@ Colors: `red`, `green`, `blue`, `yellow` (lowercase in S3 paths)
 
 ```bash
 # List all files
-aws s3 ls s3://tcg-nexus-collection --recursive
+aws s3 ls s3://sleeved-collection --recursive
 
 # Upload a card image
-aws s3 cp photo.jpg s3://tcg-nexus-collection/cyberpunk-tcg/units/red/card-slug.jpg
+aws s3 cp photo.jpg s3://sleeved-collection/cyberpunk-tcg/units/red/card-slug.jpg
 
 # Fetch inventory
-curl https://tcg-nexus-collection.s3.amazonaws.com/cyberpunk-tcg/inventory.json
+curl https://sleeved-collection.s3.amazonaws.com/cyberpunk-tcg/inventory.json
 
 # Update inventory (after editing locally)
-aws s3 cp inventory.json s3://tcg-nexus-collection/cyberpunk-tcg/inventory.json \
+aws s3 cp inventory.json s3://sleeved-collection/cyberpunk-tcg/inventory.json \
   --content-type "application/json"
 ```
 
@@ -109,7 +109,7 @@ Key fields per card:
 Each game is defined in `games/{game-id}.json`. This drives both the S3 folder
 structure and the gallery app's filter UI. To add a new game:
 1. Add `games/{new-game-id}.json` following the shape of `games/cyberpunk-tcg.json`
-2. Create the S3 folder structure under `s3://tcg-nexus-collection/{new-game-id}/`
+2. Create the S3 folder structure under `s3://sleeved-collection/{new-game-id}/`
 3. Add an entry to `games.json` in the bucket root
 
 ---
@@ -117,7 +117,7 @@ structure and the gallery app's filter UI. To add a new game:
 ## Gallery App (Planned)
 
 **Stack**: React + Vite
-**Hosting**: GitHub Pages (`https://ozone227.github.io/tcg-nexus`)
+**Hosting**: GitHub Pages (`https://ozone227.github.io/sleeved`)
 **Location**: `app/` directory
 
 Design principles:
@@ -154,6 +154,6 @@ Quick reference:
 
 ## GitHub
 
-**Repo**: https://github.com/ozone227/tcg-nexus
+**Repo**: https://github.com/ozone227/sleeved
 **Owner**: ozone227 (Ryan Bond)
 **Branch**: main
