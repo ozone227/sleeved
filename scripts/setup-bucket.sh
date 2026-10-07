@@ -1,10 +1,10 @@
 #!/bin/bash
-# The TCG Nexus — S3 Bucket Setup
+# Sleeved — S3 Bucket Setup
 # Usage: bash scripts/setup-bucket.sh
 
 set -e
 
-BUCKET="tcg-nexus-collection"
+BUCKET="sleeved-collection"
 REGION="us-east-1"
 
 echo "🪣  Creating bucket: $BUCKET in $REGION..."

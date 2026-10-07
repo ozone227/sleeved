@@ -2,14 +2,14 @@
 
 ## Storage: AWS S3
 
-**Bucket**: `tcg-nexus-collection` (us-east-1)  
+**Bucket**: `sleeved-collection` (us-east-1)  
 **Access**: Public read  
 **Versioning**: Enabled
 
 ### Layout
 
 ```
-s3://tcg-nexus-collection/
+s3://sleeved-collection/
 ├── games.json                          # Top-level game manifest
 └── {game-id}/
     ├── inventory.json                  # Card catalog for this game

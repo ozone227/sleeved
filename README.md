@@ -1,11 +1,11 @@
-# The TCG Nexus v0.1.0
+# Sleeved v0.1.0
 
 A multi-game trading card collection manager and gallery.
 
 ## Structure
 
 ```
-tcg-nexus/
+sleeved/
 ├── scripts/        # Infra setup and utility scripts
 ├── schema/         # JSON schemas for inventory files
 ├── games/          # Per-game configuration
@@ -17,11 +17,11 @@ tcg-nexus/
 
 Card images and inventory data live in S3:
 
-- **Bucket**: `tcg-nexus-collection` (us-east-1)
-- **Public URL**: `https://tcg-nexus-collection.s3.amazonaws.com`
-- **Structure**: `s3://tcg-nexus-collection/{game-id}/{type}/{color?}/{card-slug}.jpg`
-- **Inventory**: `s3://tcg-nexus-collection/{game-id}/inventory.json`
-- **Games manifest**: `s3://tcg-nexus-collection/games.json`
+- **Bucket**: `sleeved-collection` (us-east-1)
+- **Public URL**: `https://sleeved-collection.s3.amazonaws.com`
+- **Structure**: `s3://sleeved-collection/{game-id}/{type}/{color?}/{card-slug}.jpg`
+- **Inventory**: `s3://sleeved-collection/{game-id}/inventory.json`
+- **Games manifest**: `s3://sleeved-collection/games.json`
 
 ## Supported Games
 
