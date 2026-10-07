@@ -18,5 +18,5 @@ All notable changes to this project are documented here. The format follows
 - `CLAUDE.md` project context for Claude Code
 - Semantic versioning and GitHub Flow branching conventions (see `CONTRIBUTING.md`)
 
-[Unreleased]: https://github.com/ozone227/tcg-nexus/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ozone227/tcg-nexus/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ozone227/sleeved/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ozone227/sleeved/releases/tag/v0.1.0
