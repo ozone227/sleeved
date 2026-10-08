@@ -38,7 +38,10 @@ this repo (including Claude Code sessions):
   the whole project. MAJOR = breaking schema/S3-layout/game-config change,
   MINOR = new game or feature (additive), PATCH = fixes/docs/refactors.
 - **Releasing** — bump `version`, move `CHANGELOG.md`'s `[Unreleased]` section
-  into a dated `[X.Y.Z]` entry, commit as `chore(release): vX.Y.Z`, tag `vX.Y.Z`.
+  into a dated `[X.Y.Z]` entry, update the version suffix on `README.md`'s title
+  line (`# The TCG Nexus vX.Y.Z`), commit as `chore(release): vX.Y.Z`, tag `vX.Y.Z`.
+- **`main` is branch-protected** — PRs required (no direct pushes, no force-push,
+  no deletion), enforced for admins too. Always work on a branch.
 
 ---
 

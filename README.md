@@ -1,4 +1,4 @@
-# Sleeved
+# Sleeved v0.1.0
 
 A multi-game trading card collection manager and gallery.
 
