@@ -1,0 +1,12 @@
+# Pinned toolchain for Sleeved contributors. Install mise (https://mise.jdx.dev),
+# then run `mise install` — same result on macOS and Linux/WSL.
+# See docs/local-development.md.
+[tools]
+node = "22"
+python = "3.12"
+kubectl = "1.34"   # production k3s is v1.34.x (nemesis_infra)
+k3d = "5"
+
+[env]
+# Keep project Python deps out of the system interpreter.
+_.python.venv = { path = ".venv", create = true }

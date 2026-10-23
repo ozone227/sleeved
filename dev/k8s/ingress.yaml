@@ -1,0 +1,20 @@
+# Plain-HTTP stand-in for the S3 endpoint. *.localhost resolves to 127.0.0.1
+# without any /etc/hosts edits.
+#   S3 API:   http://sleeved-storage.localhost:8080   (path-style)
+# passHostHeader: false makes Traefik send the backend's own address as Host.
+# Otherwise moto reads "sleeved-storage" from "sleeved-storage.localhost" as a
+# virtual-hosted bucket name and every request 404s.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: s3
+  namespace: sleeved
+spec:
+  entryPoints: [web]
+  routes:
+    - match: Host(`sleeved-storage.localhost`)
+      kind: Rule
+      services:
+        - name: s3
+          port: 5000
+          passHostHeader: false

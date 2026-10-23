@@ -1,5 +1,9 @@
 # Contributing
 
+## Local Setup
+
+See [`docs/local-development.md`](docs/local-development.md) (macOS and Linux/WSL2).
+
 ## Branching (GitHub Flow)
 
 - `main` is always deployable and every release is tagged on it.

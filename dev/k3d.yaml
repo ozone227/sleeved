@@ -1,0 +1,23 @@
+# Local cluster definition. Mirrors the production `nemesis` k3s cluster:
+# same k3s minor version, same bundled Traefik (traefik.io/v1alpha1 CRDs).
+# Longhorn is intentionally absent; k3s's default `local-path` StorageClass
+# stands in for it.
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: sleeved-dev
+image: rancher/k3s:v1.34.3-k3s3   # keep in sync with nemesis_infra playbooks/k3s/vars/main.yml
+servers: 1
+agents: 0
+ports:
+  # Traefik "web" entrypoint -> http://*.localhost:8080
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      # Not needed locally; saves memory.
+      - arg: --disable=metrics-server
+        nodeFilters:
+          - server:*

@@ -5,12 +5,17 @@ upload_card.py — Add a card photo to the Sleeved inventory
 Processes a card photo, uploads it to S3, and updates the game's inventory.json.
 Run from the repo root or scripts/ directory.
 
+Targets AWS S3 by default. Set S3_ENDPOINT (e.g. in .env) to target an
+S3-compatible server instead, such as the local dev stand-in from `make dev-up`
+(see docs/local-development.md). S3_BUCKET overrides the bucket name.
+
 Usage:
     python scripts/upload_card.py --help
 """
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import date
@@ -36,12 +41,31 @@ except ImportError:
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 
-BUCKET = "sleeved-collection"
-REGION = "us-east-1"
+REPO_ROOT = Path(__file__).parent.parent
+
+
+def load_dotenv(path: Path) -> None:
+    """Load KEY=VALUE lines from .env into os.environ without overriding real env vars."""
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        value = value.strip().strip("\"'")
+        if value:  # blank values in .env.example-style files stay unset
+            os.environ.setdefault(key.strip(), value)
+
+
+load_dotenv(REPO_ROOT / ".env")
+
+BUCKET = os.environ.get("S3_BUCKET", "sleeved-collection")
+ENDPOINT = os.environ.get("S3_ENDPOINT")  # None → AWS S3
+REGION = os.environ.get("AWS_DEFAULT_REGION", "us-east-1")
 MAX_DIMENSION = 1200   # px — large enough for gallery zoom
 IMAGE_QUALITY = 88     # JPEG quality (0–95)
 
-REPO_ROOT = Path(__file__).parent.parent
 SCHEMA_PATH = REPO_ROOT / "schema" / "inventory.schema.json"
 GAMES_DIR   = REPO_ROOT / "games"
 
@@ -97,6 +121,21 @@ def image_field(s3_key: str, game_config: dict) -> str:
     return s3_key.removeprefix(prefix)
 
 
+def make_s3_client():
+    """boto3 client for AWS S3, or for S3_ENDPOINT (path-style) when it is set."""
+    if not ENDPOINT:
+        return boto3.client("s3", region_name=REGION)
+    from botocore.config import Config
+    return boto3.client("s3", region_name=REGION, endpoint_url=ENDPOINT,
+                        config=Config(s3={"addressing_style": "path"}))
+
+
+def public_url(key: str) -> str:
+    if ENDPOINT:
+        return f"{ENDPOINT.rstrip('/')}/{BUCKET}/{key}"
+    return f"https://{BUCKET}.s3.amazonaws.com/{key}"
+
+
 def process_image(path: Path) -> bytes:
     """Resize, convert to RGB, strip EXIF, and return JPEG bytes."""
     with Image.open(path) as img:
@@ -116,7 +155,7 @@ def fetch_inventory(s3_client, game_id: str) -> dict:
     except ClientError as e:
         if e.response["Error"]["Code"] == "NoSuchKey":
             sys.exit(f"inventory.json not found at s3://{BUCKET}/{key}\n"
-                     "Run scripts/setup-bucket.sh first.")
+                     "Run scripts/setup-bucket.sh first (local dev: make dev-up).")
         raise
 
 
@@ -247,6 +286,7 @@ def main() -> None:
     print(json.dumps(card, indent=2))
     print(f"\n🖼   Image:  {image_path}")
     print(f"     S3 key: s3://{BUCKET}/{key}")
+    print(f"     Target: {ENDPOINT or 'AWS S3'}")
 
     if args.dry_run:
         print("\n[dry-run] No changes made.")
@@ -258,7 +298,7 @@ def main() -> None:
     print(f"    {len(image_bytes) / 1024:.1f} KB (resized + EXIF stripped)")
 
     # ── S3 operations ──────────────────────────────────────────────────────────
-    s3 = boto3.client("s3", region_name=REGION)
+    s3 = make_s3_client()
 
     # Check inventory for duplicate before uploading anything
     inventory = fetch_inventory(s3, args.game)
@@ -275,7 +315,7 @@ def main() -> None:
     try:
         s3.put_object(Bucket=BUCKET, Key=key, Body=image_bytes,
                       ContentType="image/jpeg")
-        print(f"    ✅ https://{BUCKET}.s3.amazonaws.com/{key}")
+        print(f"    ✅ {public_url(key)}")
     except ClientError as e:
         sys.exit(f"Image upload failed: {e}")
 
@@ -293,7 +333,7 @@ def main() -> None:
         sys.exit("Rolled back. No changes made.")
 
     print(f"\n🎉  '{args.name}' added to your {args.game} collection.")
-    print(f"    https://{BUCKET}.s3.amazonaws.com/{key}")
+    print(f"    {public_url(key)}")
 
 
 if __name__ == "__main__":

@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Local development environment: k3d cluster mirroring prod k3s with a moto S3
+  stand-in and Postgres, `mise.toml` toolchain pins, `Makefile` targets, `make doctor`
+  (see `docs/local-development.md`)
+- `scripts/upload_card.py` honors `S3_ENDPOINT` / `S3_BUCKET` and loads `.env`,
+  so it can target the local dev S3 stand-in; defaults to AWS S3 as before
+
 ## [0.1.0] - 2026-09-05
 
 ### Added
