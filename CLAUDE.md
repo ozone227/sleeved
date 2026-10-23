@@ -47,6 +47,12 @@ this repo (including Claude Code sessions):
 
 ## Storage: AWS S3
 
+> **Current state — not yet migrated.** A move to self-hosted MinIO on the
+> `nemesis` k8s cluster is planned but not implemented; S3 below is still the
+> live storage. See [`docs/self-hosted-storage-plan.md`](docs/self-hosted-storage-plan.md).
+> Do not treat this note as a cue to start that migration — update this
+> section (and remove this note) only when the infra actually lands.
+
 **Bucket**: `sleeved-collection`
 **Region**: `us-east-1`
 **Access**: Public read
@@ -118,6 +124,11 @@ structure and the gallery app's filter UI. To add a new game:
 ---
 
 ## Gallery App (Planned)
+
+> **Hosting below is also pending the same migration.** The plan moves
+> deployment off GitHub Pages onto the self-hosted `nemesis` k8s cluster —
+> see [`docs/self-hosted-storage-plan.md`](docs/self-hosted-storage-plan.md).
+> Not implemented yet; GitHub Pages is still the documented target below.
 
 **Stack**: React + Vite
 **Hosting**: GitHub Pages (`https://ozone227.github.io/sleeved`)
