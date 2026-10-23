@@ -1,5 +1,12 @@
 # Architecture
 
+> **Planned migration, not yet implemented**: both the storage (AWS S3 → MinIO)
+> and hosting (GitHub Pages → self-hosted `nemesis` k8s cluster) described
+> below are slated to change. See
+> [`self-hosted-storage-plan.md`](self-hosted-storage-plan.md) for the target
+> design. Everything in this file reflects the current, live setup — update
+> it (and remove this note) only once that migration actually lands.
+
 ## Storage: AWS S3
 
 **Bucket**: `sleeved-collection` (us-east-1)  
