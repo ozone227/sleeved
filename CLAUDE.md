@@ -125,10 +125,16 @@ structure and the gallery app's filter UI. To add a new game:
 
 ## Gallery App (Planned)
 
-> **Hosting below is also pending the same migration.** The plan moves
-> deployment off GitHub Pages onto the self-hosted `nemesis` k8s cluster —
-> see [`docs/self-hosted-storage-plan.md`](docs/self-hosted-storage-plan.md).
-> Not implemented yet; GitHub Pages is still the documented target below.
+> **Hosting and auth below are also pending planned changes, not yet
+> implemented.** Deployment is planned to move off GitHub Pages onto the
+> self-hosted `nemesis` k8s cluster — see
+> [`docs/self-hosted-storage-plan.md`](docs/self-hosted-storage-plan.md).
+> Separately, multi-user support (accounts via Discord/Google OAuth, a
+> self-hosted Postgres database for per-user inventory and trading-list
+> state) is planned — see
+> [`docs/multi-user-architecture-plan.md`](docs/multi-user-architecture-plan.md).
+> Until both land, GitHub Pages + no-auth below is still how this actually
+> works.
 
 **Stack**: React + Vite
 **Hosting**: GitHub Pages (`https://ozone227.github.io/sleeved`)
