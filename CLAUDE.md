@@ -158,6 +158,16 @@ Design principles:
 
 ## Cyberpunk TCG Notes
 
+**https://cyberpunktcg.com/cards is the official source of truth for card images
+and card details** (text, stats, rarity, set, collector number) for Cyberpunk TCG.
+Treat it as canonical when verifying or generating card data for this project —
+see `docs/features/trading-list.md` for where that applies. Note: as of Oct 2026
+the site has no public/bulk API or stable image export (images are signed,
+expiring CloudFront URLs); it's the reference to verify *against*, not a source
+to scrape or pull images from in bulk (see the official-art outreach note in
+project memory for the status of getting bulk art access directly from the
+publisher).
+
 For rules questions, card lookups, and deckbuilding help, use the `cyberpunk-tcg` skill.
 It provides judge-level rules authority and accesses the live card database at
 https://cyberpunktcg.com/cards.
