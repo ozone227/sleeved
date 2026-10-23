@@ -14,12 +14,16 @@ sleeved/
 ├── package.json                # Root project version (single source of truth)
 ├── scripts/
 │   └── setup-bucket.sh         # One-time S3 bucket creation and configuration
+├── Makefile                    # Local dev targets (make dev-up, doctor, ...)
+├── mise.toml                   # Pinned toolchain (node, python, kubectl, k3d)
+├── dev/                        # Local k3d cluster config, MinIO values, Postgres manifest
 ├── schema/
 │   └── inventory.schema.json   # JSON schema for per-game inventory files
 ├── games/
 │   └── cyberpunk-tcg.json      # Game config: types, colors, sets, keywords, S3 paths
 ├── docs/
-│   └── architecture.md         # Design decisions and storage layout
+│   ├── architecture.md         # Design decisions and storage layout
+│   └── local-development.md    # Contributor environment (macOS / Linux+WSL)
 └── app/                        # React + Vite gallery app (in progress)
 ```
 

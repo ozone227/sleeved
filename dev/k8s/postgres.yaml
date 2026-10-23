@@ -1,0 +1,60 @@
+# Local Postgres for the planned multi-user backend
+# (docs/multi-user-architecture-plan.md). Throwaway credentials, LOCAL ONLY.
+# Reachable from the host at localhost:5432 via `make dev-db` (port-forward),
+# and in-cluster at postgres.sleeved.svc.cluster.local:5432.
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: sleeved
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: sleeved
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - { name: POSTGRES_USER, value: sleeved }
+            - { name: POSTGRES_PASSWORD, value: sleeved-dev }
+            - { name: POSTGRES_DB, value: sleeved }
+            - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
+          readinessProbe:
+            exec:
+              command: [pg_isready, -U, sleeved]
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 1Gi
